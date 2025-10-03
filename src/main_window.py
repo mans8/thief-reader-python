@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         self.current_font_size = 12
         
         # 窗口边框调整大小相关
-        self._resize_border_width = 15  # 边框宽度，设置为15px以便更容易检测
+        self._resize_border_width = 7  # 边框宽度，设置为7px以减少边框粗细
         print(f"[初始化] resize_border_width设置为: {self._resize_border_width}")
         self._last_border_width_set_reason = "初始化"
         self._border_width_history = [("初始化", self._resize_border_width)]
@@ -109,7 +109,7 @@ class MainWindow(QMainWindow):
         central_widget.setStyleSheet("""
             QWidget {
                 background-color: rgba(255, 255, 255, 200);
-                border-radius: 10px;
+                border-radius: 2px;  /* 进一步优化：减小圆角到2px */
             }
         """)
         # 为中央部件启用鼠标跟踪和事件过滤器 - 关键修复
@@ -120,8 +120,8 @@ class MainWindow(QMainWindow):
         
         # 创建主布局
         main_layout = QVBoxLayout(central_widget)
-        main_layout.setContentsMargins(15, 15, 15, 15)  # 设置为15px，与resize_border_width一致
-        main_layout.setSpacing(2)
+        main_layout.setContentsMargins(5, 5, 5, 5)  # 进一步优化：减小边距到5px
+        main_layout.setSpacing(1)  # 进一步优化：减小间距到1px
         
         # 添加标题栏
         self.create_title_bar(main_layout)
@@ -170,13 +170,13 @@ class MainWindow(QMainWindow):
         self.file_panel.setStyleSheet("""
             QFrame {
                 background-color: rgba(240, 240, 240, 200);
-                border: 1px solid rgba(200, 200, 200, 100);
-                border-radius: 8px;
+                border: 1px solid rgba(200, 200, 200, 100);  /* 保持细边框 */
+                border-radius: 1px;  /* 进一步优化：减小圆角到1px */
             }
         """)
         
         layout = QVBoxLayout(self.file_panel)
-        layout.setContentsMargins(5, 5, 5, 5)
+        layout.setContentsMargins(3, 3, 3, 3)  # 进一步优化：减小边距
         
         # 标题栏（包含收缩按钮）
         title_layout = QHBoxLayout()
@@ -184,7 +184,7 @@ class MainWindow(QMainWindow):
         title_label.setStyleSheet("""
             QLabel {
                 font-weight: bold; 
-                padding: 5px;
+                padding: 3px;  # 进一步优化：减小内边距
                 background-color: rgba(255, 255, 255, 0);
                 color: #333333;
             }
@@ -193,15 +193,15 @@ class MainWindow(QMainWindow):
         
         # 收缩按钮
         self.collapse_btn = QPushButton("«")
-        self.collapse_btn.setFixedSize(20, 20)
+        self.collapse_btn.setFixedSize(16, 16)  # 进一步优化：减小按钮尺寸
         self.collapse_btn.setStyleSheet("""
             QPushButton {
                 background-color: rgba(70, 130, 180, 150);
                 border: none;
-                border-radius: 10px;
+                border-radius: 8px;  /* 调整圆角以匹配新尺寸 */
                 color: white;
                 font-weight: bold;
-                font-size: 12px;
+                font-size: 10px;  /* 调整字体大小以匹配新尺寸 */
             }
             QPushButton:hover {
                 background-color: rgba(70, 130, 180, 200);
@@ -218,14 +218,14 @@ class MainWindow(QMainWindow):
         self.file_list.setStyleSheet("""
             QListWidget {
                 background-color: rgba(255, 255, 255, 150);
-                border: 1px solid rgba(200, 200, 200, 100);
-                border-radius: 5px;
-                padding: 5px;
+                border: 1px solid rgba(200, 200, 200, 100);  /* 保持细边框 */
+                border-radius: 1px;  /* 进一步优化：减小圆角到1px */
+                padding: 3px;  # 进一步优化：减小内边距
             }
             QListWidget::item {
-                padding: 8px;
-                border-radius: 4px;
-                margin: 2px;
+                padding: 5px;  # 进一步优化：减小项目内边距
+                border-radius: 1px;  /* 进一步优化：减小圆角到1px */
+                margin: 1px;  /* 保持小间距 */
             }
             QListWidget::item:selected {
                 background-color: rgba(70, 130, 180, 150);
@@ -247,16 +247,16 @@ class MainWindow(QMainWindow):
     def create_title_bar(self, layout):
         """创建自定义标题栏"""
         self.title_bar = QWidget()  # 保存为实例属性以便在极简模式中隐藏
-        self.title_bar.setFixedHeight(30)
+        self.title_bar.setFixedHeight(25)  # 进一步优化：减小标题栏高度
         self.title_bar.setStyleSheet("""
             QWidget {
                 background-color: rgba(70, 130, 180, 255);  /* 完全不透明 */
-                border-radius: 5px;
+                border-radius: 1px 1px 0 0;  /* 进一步优化：减小圆角到1px */
             }
         """)
         
         title_layout = QHBoxLayout(self.title_bar)
-        title_layout.setContentsMargins(10, 0, 10, 0)
+        title_layout.setContentsMargins(5, 0, 5, 0)  # 进一步优化：减小边距
         
         # 标题文本
         self.title_label = QLabel("技术文档阅读器")  # 保存为实例属性
@@ -264,6 +264,7 @@ class MainWindow(QMainWindow):
             QLabel {
                 color: white;
                 font-weight: bold;
+                font-size: 12px;  # 进一步优化：减小字体大小
                 background-color: transparent;
             }
         """)
@@ -275,15 +276,15 @@ class MainWindow(QMainWindow):
         
         # 最小化按钮
         self.min_btn = QPushButton("-")
-        self.min_btn.setFixedSize(25, 25)
+        self.min_btn.setFixedSize(20, 20)  # 进一步优化：减小按钮尺寸
         self.min_btn.setStyleSheet("""
             QPushButton {
                 background-color: #ffffff;
                 border: none;
-                border-radius: 12px;
+                border-radius: 10px;
                 color: #333333;
                 font-weight: bold;
-                font-size: 14px;
+                font-size: 12px;  # 调整字体大小以匹配新尺寸
             }
             QPushButton:hover {
                 background-color: #e0e0e0;
@@ -299,15 +300,15 @@ class MainWindow(QMainWindow):
         
         # 最大化按钮
         self.max_btn = QPushButton("□")  # 使用空心正方形表示最大化
-        self.max_btn.setFixedSize(25, 25)
+        self.max_btn.setFixedSize(20, 20)  # 进一步优化：减小按钮尺寸
         self.max_btn.setStyleSheet("""
             QPushButton {
                 background-color: #ffffff;
                 border: none;
-                border-radius: 12px;
+                border-radius: 10px;
                 color: #333333;
                 font-weight: bold;
-                font-size: 14px;
+                font-size: 12px;  # 调整字体大小以匹配新尺寸
             }
             QPushButton:hover {
                 background-color: #e0e0e0;
@@ -323,15 +324,15 @@ class MainWindow(QMainWindow):
         
         # 关闭按钮
         close_btn = QPushButton("×")
-        close_btn.setFixedSize(25, 25)
+        close_btn.setFixedSize(20, 20)  # 进一步优化：减小按钮尺寸
         close_btn.setStyleSheet("""
             QPushButton {
                 background-color: #ff5f57;
                 border: none;
-                border-radius: 12px;
+                border-radius: 10px;
                 color: #ffffff;
                 font-weight: bold;
-                font-size: 16px;
+                font-size: 14px;  # 调整字体大小以匹配新尺寸
             }
             QPushButton:hover {
                 background-color: #ff3b30;
@@ -373,16 +374,16 @@ class MainWindow(QMainWindow):
             }
         """)
         layout = QVBoxLayout(reading_panel)
-        layout.setContentsMargins(10, 10, 10, 10)
+        layout.setContentsMargins(5, 5, 5, 5)  # 进一步优化：减小边距
         
         # 文档标题
         self.doc_title = QLabel("欢迎使用技术文档阅读器")
         self.doc_title.setAlignment(Qt.AlignCenter)
         self.doc_title.setStyleSheet("""
             QLabel {
-                font-size: 16px; 
+                font-size: 14px;  # 进一步优化：减小字体大小
                 font-weight: bold; 
-                padding: 10px;
+                padding: 5px;  # 进一步优化：减小内边距
                 background-color: rgba(255, 255, 255, 0);
                 color: #333333;
             }
@@ -398,22 +399,22 @@ class MainWindow(QMainWindow):
         self.reading_area.setStyleSheet("""
             QTextEdit {
                 background-color: rgba(255, 255, 255, 255);  /* 完全不透明 */
-                border: 1px solid rgba(200, 200, 200, 255);  /* 完全不透明边框 */
-                border-radius: 8px;
-                padding: 15px;
+                border: 1px solid rgba(200, 200, 200, 100);  /* 进一步优化：减小边框透明度 */
+                border-radius: 1px;  /* 进一步优化：减小圆角到1px */
+                padding: 10px;  # 进一步优化：减小内边距
                 font-family: 'Microsoft YaHei';
                 font-size: 12px;
                 color: #333333;
             }
             QScrollBar:vertical {
-                background-color: rgba(240, 240, 240, 255);  /* 完全不透明 */
-                width: 12px;
-                border-radius: 6px;
+                background-color: rgba(240, 240, 240, 150);  /* 进一步优化：调整透明度 */
+                width: 8px;  /* 进一步优化：减小滚动条宽度到8px */
+                border-radius: 4px;  /* 调整圆角以匹配新宽度 */
             }
             QScrollBar::handle:vertical {
-                background-color: rgba(180, 180, 180, 255);  /* 完全不透明 */
-                border-radius: 6px;
-                min-height: 20px;
+                background-color: rgba(180, 180, 180, 150);  /* 进一步优化：调整透明度 */
+                border-radius: 4px;  /* 调整圆角以匹配新宽度 */
+                min-height: 15px;  # 调整最小高度
             }
             QScrollBar:horizontal {
                 height: 0px;
@@ -564,10 +565,12 @@ class MainWindow(QMainWindow):
         self.status_bar.setStyleSheet("""
             QStatusBar {
                 background-color: rgba(240, 240, 240, 255);
-                border-top: 1px solid rgba(200, 200, 200, 255);
-                padding: 2px;
-                height: 20px;
+                border-top: 1px solid rgba(200, 200, 200, 100);  /* 进一步优化：减小边框透明度 */
+                border-radius: 0 0 1px 1px;  /* 进一步优化：减小圆角到1px */
+                padding: 1px;  # 进一步优化：减小内边距
+                height: 18px;  # 进一步优化：减小高度
                 color: #333333;
+                font-size: 10px;  # 进一步优化：减小字体大小
             }
         """)
         # 为状态栏启用鼠标跟踪和事件过滤器，确保下边框拖拽正常工作 - 关键修复
@@ -1535,6 +1538,18 @@ class MainWindow(QMainWindow):
             # 确保状态栏在窗口状态变化后仍然正确显示
             if hasattr(self, 'status_bar') and self.status_bar:
                 self.status_bar.setVisible(True)
+                # 确保状态栏背景完全不透明
+                self.status_bar.setStyleSheet("""
+                    QStatusBar {
+                        background-color: rgba(240, 240, 240, 255);
+                        border-top: 1px solid rgba(200, 200, 200, 100);
+                        border-radius: 0 0 1px 1px;
+                        padding: 1px;
+                        height: 18px;
+                        color: #333333;
+                        font-size: 10px;
+                    }
+                """)
                 # 强制更新状态栏布局
                 self.status_bar.updateGeometry()
                 # 确保状态栏在最前面
@@ -1546,4 +1561,16 @@ class MainWindow(QMainWindow):
         # 确保状态栏在窗口大小变化后仍然正确显示
         if hasattr(self, 'status_bar') and self.status_bar:
             self.status_bar.setVisible(True)
+            # 确保状态栏背景完全不透明
+            self.status_bar.setStyleSheet("""
+                QStatusBar {
+                    background-color: rgba(240, 240, 240, 255);
+                    border-top: 1px solid rgba(200, 200, 200, 100);
+                    border-radius: 0 0 1px 1px;
+                    padding: 1px;
+                    height: 18px;
+                    color: #333333;
+                    font-size: 10px;
+                }
+            """)
         super().resizeEvent(event)

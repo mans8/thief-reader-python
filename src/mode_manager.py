@@ -100,7 +100,7 @@ class ModeManager:
         central_widget.setStyleSheet("""
             QWidget {
                 background-color: rgba(255, 255, 255, 255);  /* 完全不透明 */
-                border-radius: 10px;
+                border-radius: 2px;  /* 进一步优化：匹配主窗口圆角 */
             }
         """)
         
@@ -108,7 +108,7 @@ class ModeManager:
         main_window.title_bar.setStyleSheet("""
             QWidget {
                 background-color: rgba(70, 130, 180, 255);  /* 完全不透明 */
-                border-radius: 5px;
+                border-radius: 1px 1px 0 0;  /* 进一步优化：减小圆角到1px */
             }
         """)
         
@@ -146,22 +146,22 @@ class ModeManager:
         main_window.reading_area.setStyleSheet(f"""
             QTextEdit {{
                 background-color: rgba(255, 255, 255, 255);  /* 完全不透明 */
-                border: 1px solid rgba(200, 200, 200, 255);  /* 完全不透明边框 */
-                border-radius: 8px;
-                padding: 15px;
+                border: 1px solid rgba(200, 200, 200, 100);  /* 进一步优化：减小边框透明度 */
+                border-radius: 1px;  /* 进一步优化：减小圆角到1px */
+                padding: 10px;  # 进一步优化：减小内边距
                 font-family: '{font_family}';
                 font-size: {font_size}px;
                 color: #333333;
             }}
             QScrollBar:vertical {{
-                background-color: rgba(240, 240, 240, 255);  /* 完全不透明 */
-                width: 12px;
-                border-radius: 6px;
+                background-color: rgba(240, 240, 240, 150);  /* 进一步优化：调整透明度 */
+                width: 8px;  /* 进一步优化：减小滚动条宽度到8px */
+                border-radius: 4px;  /* 调整圆角以匹配新宽度 */
             }}
             QScrollBar::handle:vertical {{
-                background-color: rgba(180, 180, 180, 255);  /* 完全不透明 */
-                border-radius: 6px;
-                min-height: 20px;
+                background-color: rgba(180, 180, 180, 150);  /* 进一步优化：调整透明度 */
+                border-radius: 4px;  /* 调整圆角以匹配新宽度 */
+                min-height: 15px;  # 调整最小高度
             }}
             QScrollBar:horizontal {{
                 height: 0px;
