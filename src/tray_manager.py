@@ -54,38 +54,45 @@ class TrayManager(QObject):
             print(f"创建托盘图标时出错: {e}")
             
     def create_icon(self):
-        """创建应用图标 - 模仿谷歌浏览器图标"""
-        # 创建一个类似谷歌浏览器的圆形图标
-        pixmap = QPixmap(16, 16)
-        pixmap.fill(QColor(0, 0, 0, 0))  # 透明背景
-        
-        painter = QPainter(pixmap)
-        painter.setRenderHint(QPainter.Antialiasing)
-        
-        # 绘制外圈 - 蓝色
-        painter.setBrush(QColor(66, 133, 244))  # 谷歌蓝
-        painter.setPen(QColor(32, 33, 36))      # 深灰色边框
-        painter.drawEllipse(1, 1, 14, 14)
-        
-        # 绘制内圈 - 红色
-        painter.setBrush(QColor(234, 67, 53))   # 谷歌红
-        painter.setPen(QColor(0, 0, 0, 0))      # 透明边框
-        painter.drawEllipse(4, 4, 8, 8)
-        
-        # 绘制中心白色圆点
-        painter.setBrush(QColor(255, 255, 255))
-        painter.drawEllipse(6, 6, 4, 4)
-        
-        # 绘制一些装饰线条
-        painter.setBrush(QColor(52, 168, 83))   # 谷歌绿
-        painter.drawEllipse(2, 6, 3, 4)
-        
-        painter.setBrush(QColor(251, 188, 5))   # 谷歌黄
-        painter.drawEllipse(11, 6, 3, 4)
-        
-        painter.end()
-        
-        return QIcon(pixmap)
+        """创建应用图标 - 使用logo.png"""
+        # 尝试加载logo.png文件作为图标
+        import os
+        icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logo.png")
+        if os.path.exists(icon_path):
+            return QIcon(icon_path)
+        else:
+            # 如果logo.png不存在，则使用原来的绘制图标
+            # 创建一个类似谷歌浏览器的圆形图标
+            pixmap = QPixmap(16, 16)
+            pixmap.fill(QColor(0, 0, 0, 0))  # 透明背景
+            
+            painter = QPainter(pixmap)
+            painter.setRenderHint(QPainter.Antialiasing)
+            
+            # 绘制外圈 - 蓝色
+            painter.setBrush(QColor(66, 133, 244))  # 谷歌蓝
+            painter.setPen(QColor(32, 33, 36))      # 深灰色边框
+            painter.drawEllipse(1, 1, 14, 14)
+            
+            # 绘制内圈 - 红色
+            painter.setBrush(QColor(234, 67, 53))   # 谷歌红
+            painter.setPen(QColor(0, 0, 0, 0))      # 透明边框
+            painter.drawEllipse(4, 4, 8, 8)
+            
+            # 绘制中心白色圆点
+            painter.setBrush(QColor(255, 255, 255))
+            painter.drawEllipse(6, 6, 4, 4)
+            
+            # 绘制一些装饰线条
+            painter.setBrush(QColor(52, 168, 83))   # 谷歌绿
+            painter.drawEllipse(2, 6, 3, 4)
+            
+            painter.setBrush(QColor(251, 188, 5))   # 谷歌黄
+            painter.drawEllipse(11, 6, 3, 4)
+            
+            painter.end()
+            
+            return QIcon(pixmap)
         
     def create_context_menu(self):
         """创建托盘右键菜单"""

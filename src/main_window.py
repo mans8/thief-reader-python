@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                              QMessageBox, QFrame, QPushButton, QShortcut, QApplication,
                              QDesktopWidget)  # 添加QDesktopWidget导入
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
-from PyQt5.QtGui import QIcon, QFont, QPalette, QColor, QKeySequence, QWheelEvent, QCursor
+from PyQt5.QtGui import QIcon, QFont, QPalette, QColor, QKeySequence, QWheelEvent, QCursor, QPixmap
 
 from document_reader import DocumentReader
 from settings_manager import SettingsManager
@@ -95,6 +95,11 @@ class MainWindow(QMainWindow):
         """初始化用户界面"""
         self.setWindowTitle("技术文档阅读器 - Technical Document Reader")
         self.setGeometry(100, 100, 1000, 700)
+        
+        # 设置窗口图标
+        icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logo.png")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
         
         # 设置窗口属性，实现背景透明
         self.setAttribute(Qt.WA_TranslucentBackground, True)
@@ -257,6 +262,16 @@ class MainWindow(QMainWindow):
         
         title_layout = QHBoxLayout(self.title_bar)
         title_layout.setContentsMargins(5, 0, 5, 0)  # 进一步优化：减小边距
+        
+        # 应用图标
+        self.title_icon = QLabel()
+        icon_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "logo.png")
+        if os.path.exists(icon_path):
+            pixmap = QPixmap(icon_path)
+            # 调整图标大小以适应标题栏
+            pixmap = pixmap.scaled(16, 16, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            self.title_icon.setPixmap(pixmap)
+        title_layout.addWidget(self.title_icon)
         
         # 标题文本
         self.title_label = QLabel("技术文档阅读器")  # 保存为实例属性
