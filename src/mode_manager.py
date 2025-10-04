@@ -80,6 +80,32 @@ class ModeManager:
                 font-size: {font_size}px;
                 color: #333333;
             }}
+            /* 修改垂直滚动条 */
+            QTextEdit QScrollBar:vertical {{
+                width: 8px;                /* 滚动条宽度 */
+                background: transparent;
+                border-radius: 4px;
+            }}
+        
+            QTextEdit QScrollBar::handle:vertical {{
+                background: #a0a0a0;       /* 滑块颜色 */
+                border-radius: 4px;
+                min-height: 20px;
+            }}
+        
+            QTextEdit QScrollBar::handle:vertical:hover {{
+                background: #707070;       /* 鼠标悬停时颜色 */
+            }}
+        
+            /* 可选：隐藏滚动条边框和箭头按钮 */
+            QTextEdit QScrollBar::add-line:vertical, 
+            QTextEdit QScrollBar::sub-line:vertical {{
+                height: 0px;
+                background: none;
+            }}
+            
+            
+            
         """)
         
     def _exit_minimal_mode(self):
